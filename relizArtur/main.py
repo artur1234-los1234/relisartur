@@ -54,7 +54,7 @@ class Player(GameSprite):
         bullets.add(bullet)
 
     def fire1(self):
-        raketa = raketas(img_bullet, self.rect.centerx, self.rect.top, 15, 50, -15)
+        raketa = Bullet(raketa_bullet, self.rect.centerx, self.rect.top, 15, 50, -15)
         raketan.add(raketa)
 
 
@@ -149,16 +149,15 @@ while run:
 
        elif e.type == KEYDOWN:
             if e.key == K_SPACE:
-                if num_fire < 5 and rel_time == False:
-                    num_fire = num_fire + 1
+                #if num_fire < 5 and rel_time == False:
+                    #num_fire = num_fire + 1
                     fire_sound.play()
                     ship.fire()
 
-       elif e.type == KEYDOWN:
             if e.key == K_b:
                 if num_fire < 5 and rel_time == False:
                     num_fire = num_fire + 1
-                    ship.fire()
+                    ship.fire1()
 
                 if num_fire >= 5 and rel_time == False : #якщо гравець зробив 5 пострілів
                     last_time = timer() #засікаємо час, коли це сталося
@@ -186,18 +185,19 @@ while run:
     asteroids.draw(window)
 
 # перезарядка
-    if rel_time == True:
-            now_time = timer() # зчитуємо час
+    # if rel_time == True:
+    #         now_time = timer() # зчитуємо час
          
-            if now_time - last_time < 3: #поки не минуло 3 секунди виводимо інформацію про перезарядку
-                reload = font2.render('Wait, reload...', 1, (150, 0, 0))
-                window.blit(reload, (260, 460))
-            else:
-                num_fire = 0     #обнулюємо лічильник куль
-                rel_time = False #скидаємо прапор перезарядки
+    #         if now_time - last_time < 3: #поки не минуло 3 секунди виводимо інформацію про перезарядку
+    #             reload = font2.render('Wait, reload...', 1, (150, 0, 0))
+    #             window.blit(reload, (260, 460))
+    #         else:
+    #             num_fire = 0     #обнулюємо лічильник куль
+    #             rel_time = False #скидаємо прапор перезарядки
 
-# перевірка зіткнення кулі та монстрів (і монстр, і куля при зіткненні зникають)
+         #перевірка зіткнення кулі та монстрів (і монстр, і куля при дотику зникають)
     collides = sprite.groupcollide(monsters, bullets, True, True)
+   
     for c in collides:
             # цей цикл повториться стільки разів, скільки монстрів збито
             score = score + 1
